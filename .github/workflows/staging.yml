@@ -1,0 +1,19 @@
+name: Staging Deploy
+
+on: [push]
+      
+jobs:
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action   # ジョブの名前
+    runs-on: ubuntu-latest    # 仮想環境の指定
+
+    steps:
+        - uses: actions/checkout@v2   # チェックアウトアクション（https://github.com/actions/checkout）
+        - name: FTP-Deploy-Action
+          uses: SamKirkland/FTP-Deploy-Action@4.3.0 
+          with:
+                server: ${{ secrets.PROD_SERVER }}       # FTPのサーバーアドレス
+                username: ${{ secrets.PROD_USERNAME }}   # FTPのユーザー名名
+                password: ${{ secrets.PROD_PASSWORD }}   # FTPのパスワード
+                local-dir: ../git_demo/                          # アップロードしたいファイルのパス、この場合srcディレクトリ内をアップロード対象としている
+                server-dir: /web/weskadev2.work/git_demo/      # アップロード先のリモートパス
